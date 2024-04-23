@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
   const [allTotalAmount, setAllTotalAmount] = useState("");
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -56,48 +55,49 @@ const CartItems = () => {
       alert(data.message);
     } catch (error) {
       console.error(error);
-      alert("Failed to place order");    }
+      alert("Failed to place order");
+    }
   };
 
   return (
     <div className="container mx-auto my-8 px-4">
       <h1 className="text-2xl font-bold mb-4">Cart</h1>
-      <div className="flex flex-col">
-        <div className="flex justify-between border-b border-gray-300 py-2 gap-1">
-          <div className="flex-1">Product</div>
-          <div className="w-16 text-right">Price</div>
-          <div className="w-16 text-right">Quantity</div>
-        </div>
-        {cartItems.map((item) => (
-          <div
-            key={item._id}
-            className="flex justify-between items-center border-b border-gray-300 py-2"
-          >
-            <div className="flex-1 flex items-center">
-              <img
-                src={item.productId.image}
-                alt={item.productId.name}
-                className="mr-2 w-16 h-16"
-              />
-              <div>
-                <p className="font-bold text-sm">{item.productId.name}</p>
-                <p className="text-gray-500 text-xs">
-                  {item.productId.description}
-                </p>
-              </div>
-            </div>
-            <div className="w-16 text-right">${item.productId.price}</div>
-
-            <div className="w-16 text-right">${item.quantity}</div>
+      {cartItems.length === 0 ? (
+        <p className="text-lg">Cart is empty.</p>
+      ) : (
+        <div className="flex flex-col">
+          <div className="flex justify-between border-b border-gray-300 py-2 gap-1">
+            <div className="flex-1">Product</div>
+            <div className="w-16 text-right">Price</div>
+            <div className="w-16 text-right">Quantity</div>
           </div>
-        ))}
-      </div>
-
+          {cartItems.map((item) => (
+            <div
+              key={item._id}
+              className="flex justify-between items-center border-b border-gray-300 py-2"
+            >
+              <div className="flex-1 flex items-center">
+                <img
+                  src={item.productId.image}
+                  alt={item.productId.name}
+                  className="mr-2 w-16 h-16"
+                />
+                <div>
+                  <p className="font-bold text-sm">{item.productId.name}</p>
+                  <p className="text-gray-500 text-xs">
+                    {item.productId.description}
+                  </p>
+                </div>
+              </div>
+              <div className="w-16 text-right">${item.productId.price}</div>
+              <div className="w-16 text-right">${item.quantity}</div>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="text-end">
-       
         <h1 className="text-2xl py-4">Total Price{allTotalAmount}</h1>
       </div>
-
       <div className="mt-1">
         <h2 className="text-lg font-bold mb-2">Checkout</h2>
         <form onSubmit={handlePlaceOrder}>
@@ -116,7 +116,6 @@ const CartItems = () => {
               required
             />
           </div>
-
           <div className="mb-2">
             <label htmlFor="lastName" className="block text-sm font-bold mb-1">
               Last Name
@@ -132,7 +131,6 @@ const CartItems = () => {
               required
             />
           </div>
-
           <div className="mb-2">
             <label htmlFor="address" className="block text-sm font-bold mb-1">
               Address
@@ -147,7 +145,6 @@ const CartItems = () => {
               required
             ></textarea>
           </div>
-
           <button
             type="submit"
             className="bg-blue-500 text-white font-bold py-1 px-2 rounded hover:bg-blue-600"
